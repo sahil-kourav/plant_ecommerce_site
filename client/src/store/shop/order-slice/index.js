@@ -16,7 +16,7 @@ export const createNewOrder = createAsyncThunk(
       "http://localhost:5000/api/shop/order/create",
       orderData
     );
-    console.log("Fetched Order Details:", response.data);
+    // console.log("Fetched Order Details:", response.data);
     return response.data;
   }
 );
@@ -43,7 +43,6 @@ export const getAllOrdersByUserId = createAsyncThunk(
     const response = await axios.get(
       `http://localhost:5000/api/shop/order/list/${userId}`
     );
-    console.log("Fetched Order Details:", response.data);
     return response.data;
 
   }

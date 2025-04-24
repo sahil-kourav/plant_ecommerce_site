@@ -51,7 +51,7 @@
 
 
 
-
+const { Op } = require("sequelize");
 const Product = require("../../models/Product");
 
 const searchProducts = async (req, res) => {
@@ -61,21 +61,19 @@ const searchProducts = async (req, res) => {
     if (!keyword || typeof keyword !== "string") {
       return res.status(400).json({
         success: false,
-        message: "Keyword is required and must be in string format",
+        message: "Keyword is required and must be a string",
       });
     }
 
-    const regEx = new RegExp(keyword, "i"); // case-insensitive
-
-    const createSearchQuery = {
-      $or: [
-        { title: regEx },
-        { description: regEx },
-        { category: regEx },
-      ],
-    };
-
-    const searchResults = await Product.findAll(createSearchQuery);
+    const searchResults = await Product.findAll({
+      where: {
+        [Op.or]: [
+          { title: { [Op.like]: `%${keyword}%` } },
+          // { description: { [Op.like]: `%${keyword}%` } },
+          { category: { [Op.like]: `%${keyword}%` } },
+        ],
+      },
+    });
 
     res.status(200).json({
       success: true,
@@ -85,7 +83,7 @@ const searchProducts = async (req, res) => {
     console.log(error);
     res.status(500).json({
       success: false,
-      message: "Error",
+      message: "Error occurred while searching products",
     });
   }
 };

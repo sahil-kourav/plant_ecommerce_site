@@ -61,7 +61,7 @@ function AdminOrdersView() {
                 <TableRow key={orderItem.id}>
                   <TableCell>{orderItem?.id}</TableCell>
                   <TableCell>
-                    {new Date(orderItem?.orderDate).toLocaleDateString()}
+                    {new Date(orderItem?.orderDate).toLocaleDateString("en-GB")}
                   </TableCell>
                   <TableCell>
                     <Badge

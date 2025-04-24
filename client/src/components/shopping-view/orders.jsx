@@ -36,6 +36,7 @@ function ShoppingOrders() {
   }, [orderDetails]);
 
   const handleFetchOrderDetails = (id) => {
+    dispatch(resetOrderDetails()); 
     dispatch(getOrderDetails(id));
   };
 
@@ -66,7 +67,9 @@ function ShoppingOrders() {
                     <TableCell className="font-medium text-gray-700 break-words">
                       {orderItem.id}
                     </TableCell>
-                    <TableCell>{orderItem?.orderDate?.split("T")[0]}</TableCell>
+                    <TableCell>
+                    {new Date(orderItem?.orderDate).toLocaleDateString("en-GB")}
+                  </TableCell> 
                     <TableCell>
                       <Badge
                         className={`capitalize py-1 px-3 text-white text-xs font-semibold rounded-full shadow-sm ${
@@ -126,7 +129,8 @@ function ShoppingOrders() {
                 <div className="text-sm text-gray-700 font-semibold">
                   Date:
                   <span className="ml-1 font-normal">
-                    {orderItem?.orderDate?.split("T")[0]}
+                    {/* {orderItem?.orderDate?.split("T")[0]} */}
+                    {new Date(orderItem?.orderDate).toLocaleDateString()}
                   </span>
                 </div>
                 <div className="text-sm text-gray-700 font-semibold">

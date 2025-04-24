@@ -24,17 +24,24 @@ function SearchProducts() {
 
   const { cartItems } = useSelector((state) => state.shopCart);
   const { toast } = useToast();
+
+
   useEffect(() => {
-    if (keyword && keyword.trim() !== "" && keyword.trim().length > 3) {
-      setTimeout(() => {
-        setSearchParams(new URLSearchParams(`?keyword=${keyword}`));
-        dispatch(getSearchResults(keyword));
-      }, 1000);
-    } else {
-      setSearchParams(new URLSearchParams(`?keyword=${keyword}`));
-      dispatch(resetSearchResults());
-    }
+    const trimmed = keyword.trim();
+  
+    const handler = setTimeout(() => {
+      if (trimmed.length > 2) {
+        setSearchParams(new URLSearchParams(`?keyword=${trimmed}`));
+        dispatch(getSearchResults(trimmed));
+      } else {
+        setSearchParams(new URLSearchParams(`?keyword=${trimmed}`));
+        dispatch(resetSearchResults());
+      }
+    }, 400);
+  
+    return () => clearTimeout(handler); // Cleanup old timer on keyword change
   }, [keyword]);
+  
 
   function handleAddtoCart(getCurrentProductId, getTotalStock) {
     // console.log(cartItems);
@@ -74,15 +81,12 @@ function SearchProducts() {
   }
 
   function handleGetProductDetails(getCurrentProductId) {
-    // console.log(getCurrentProductId);
     dispatch(fetchProductDetails(getCurrentProductId));
   }
 
   useEffect(() => {
     if (productDetails !== null) setOpenDetailsDialog(true);
   }, [productDetails]);
-
-  // console.log(searchResults, "searchResults");
 
   return (
     <div className="container min-h-screen mx-auto md:px-6 px-4 py-8">
@@ -98,7 +102,7 @@ function SearchProducts() {
         </div>
       </div>
       {!searchResults.length ? (
-        <h1 className="text-5xl font-extrabold">No result found!</h1>
+        <h1 className="text-3xl font-extrabold">No result found!</h1>
       ) : null}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
         {searchResults.map((item) => (

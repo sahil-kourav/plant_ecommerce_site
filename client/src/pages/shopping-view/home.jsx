@@ -122,7 +122,8 @@ function ShoppingHome() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Slider */}
-      <div className="relative w-full h-[300px] sm:h-[500px] lg:h-[700px] overflow-hidden">
+      <div className="relative mt-10 rounded-xl w-full sm:w-[582px] md:w-[780px] lg:w-[931px] xl:w-[1160px] 2xl:w-[1396px] mx-auto h-[273px] sm:h-[455px] lg:h-[637px] overflow-hidden">
+
         {featureImageList?.map((slide, index) => (
           <img
             src={slide?.image}
@@ -203,7 +204,7 @@ function ShoppingHome() {
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {products.slice(0, 4).map((productItem) => (
                   <ShoppingProductTile
-                    key={productItem._id}
+                    key={productItem.id}
                     handleGetProductDetails={handleGetProductDetails}
                     product={productItem}
                     handleAddtoCart={handleAddtoCart}

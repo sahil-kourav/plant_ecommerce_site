@@ -51,7 +51,11 @@ function AdminOrderDetailsView({ orderDetails }) {
           </div>
           <div className="flex items-center justify-between">
             <p className="font-medium">Order Date</p>
-            <Label>{orderDetails?.orderDate.split("T")[0]}</Label>
+            <Label>{
+                orderDetails?.orderDate
+                  ? new Date(orderDetails.orderDate).toLocaleDateString("en-GB")
+                  : "Not Available"
+              }</Label>
           </div>
           <div className="flex items-center justify-between">
             <p className="font-medium">Order Price</p>

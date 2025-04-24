@@ -1,5 +1,13 @@
-function UnauthPage() {
-  return <h1>You don't have access to view this page</h1>;
-}
+import React from "react";
 
-export default UnauthPage;
+const index = () => {
+  return (
+    <div>
+      <div className="text-center mt-10">
+        <h1>You don't have access to view this page</h1>
+      </div>
+    </div>
+  );
+};
+
+export default index;

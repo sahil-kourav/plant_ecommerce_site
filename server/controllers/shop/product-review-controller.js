@@ -115,14 +115,16 @@ const addProductReview = async (req, res) => {
       where: {
         userId,
       },
-      include: {
+      include: [{
         model: Product,
+        as: 'products',
         where: {
           id: productId,
         },
-      },
+      }],
     });
-
+    
+      
     if (!order) {
       return res.status(403).json({
         success: false,

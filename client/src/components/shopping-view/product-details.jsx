@@ -129,11 +129,11 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
                 productDetails?.salePrice > 0 ? "line-through opacity-70" : ""
               }`}
             >
-              ₹{productDetails?.price}
+              ${productDetails?.price}
             </p>
             {productDetails?.salePrice > 0 && (
               <p className="text-lg font-semibold text-primary">
-                ₹{productDetails?.salePrice}
+                ${productDetails?.salePrice}
               </p>
             )}
           </div>

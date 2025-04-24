@@ -20,7 +20,7 @@ const db = require("./models"); // imports sequelize + models
 const bcrypt = require('bcryptjs'); // For password hashing
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 
 // Middleware
 app.use(

@@ -22,7 +22,13 @@ function ShoppingOrderDetailsView({ orderDetails }) {
             <DetailRow label="Order ID" value={orderDetails?.id} />
             <DetailRow
               label="Order Date"
-              value={orderDetails?.orderDate?.split("T")[0]}
+              // value={orderDetails?.orderDate?.split("T")[0]}
+              value={
+                orderDetails?.orderDate
+                  ? new Date(orderDetails.orderDate).toLocaleDateString("en-GB")
+                  : "Not Available"
+              }
+              
             />
             <DetailRow
               label="Order Price"
@@ -78,7 +84,7 @@ function ShoppingOrderDetailsView({ orderDetails }) {
         <Separator />
 
         {/* Shipping Info */}
-        <div className="grid gap-3">
+        {/* <div className="grid gap-3">
           <h2 className="text-lg font-semibold text-gray-900">
             Shipping Information
           </h2>
@@ -99,7 +105,43 @@ function ShoppingOrderDetailsView({ orderDetails }) {
             )}
           </div>
         </div>
-      </div>
+      </div> */}
+
+<div className="grid gap-4">
+          <div className="grid gap-2">
+            <div className="font-medium">Shipping Info</div>
+            <div className="grid gap-0.5">
+              <div className="grid gap-2 text-md">
+                <div className="flex items-center justify-between">
+                  <span className="font-medium text-primary">Recipient:</span>{" "}
+                  {user?.userName}
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="font-medium text-primary">
+                    Shipping Address:
+                  </span>{" "}
+                  {[
+                    orderDetails?.address?.address,
+                    orderDetails?.address?.city,
+                    orderDetails?.address?.pincode,
+                  ]
+                    .filter(Boolean)
+                    .join(", ") || "N/A"}
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="font-medium text-primary">Phone:</span>{" "}
+                  {orderDetails?.address?.phone || "N/A"}
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="font-medium text-primary">Notes:</span>{" "}
+                  {orderDetails?.address?.notes || "N/A"}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+</div>
     </DialogContent>
   );
 }

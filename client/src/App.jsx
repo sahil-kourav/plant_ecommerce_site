@@ -38,7 +38,18 @@ function App() {
   }, [dispatch]);
 
   if (isLoading) return <Skeleton className="w-[800] bg-black h-[600px]" />;
+
+  const noFooterRoutes = [
+    "/auth/login",
+    "/auth/register",
+    "/unauth-page",
+    "*"
+  ];
   const isAdminPath = location.pathname.startsWith("/admin");
+  const hideFooter = isAdminPath || noFooterRoutes.includes(location.pathname);
+  
+  // later in return:
+  
 
   // console.log(isLoading, user);
 
@@ -98,7 +109,7 @@ function App() {
         <Route path="/unauth-page" element={<UnauthPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      {!isAdminPath && <Footer />}
+      {!hideFooter && <Footer />}
     </div>
   );
 }
