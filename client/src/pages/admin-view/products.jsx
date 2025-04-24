@@ -24,7 +24,6 @@ const initialFormData = {
   title: "",
   description: "",
   category: "",
-  brand: "",
   price: "",
   salePrice: "",
   totalStock: "",
@@ -54,7 +53,7 @@ function AdminProducts() {
             formData,
           })
         ).then((data) => {
-          console.log(data, "edit");
+          // console.log(data, "edit");
 
           if (data?.payload?.success) {
             dispatch(fetchAllProducts());
@@ -100,7 +99,7 @@ function AdminProducts() {
     dispatch(fetchAllProducts());
   }, [dispatch]);
 
-  console.log(formData, "productList");
+  // console.log(formData, "productList");
 
   return (
     <Fragment>
@@ -150,7 +149,7 @@ function AdminProducts() {
               onSubmit={onSubmit}
               formData={formData}
               setFormData={setFormData}
-              buttonText={currentEditedId !== null ? "Edit" : "Add"}
+              buttonText={currentEditedId !== null ? "Save Changes" : "Add Product"}
               formControls={addProductFormElements}
               isBtnDisabled={!isFormValid()}
             />

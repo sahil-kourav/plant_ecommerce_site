@@ -20,27 +20,36 @@ function UserCartWrapper({ cartItems, setOpenCartSheet }) {
       : 0;
 
   return (
-    <SheetContent className="sm:max-w-md">
+    <SheetContent className="sm:max-w-xl w-full p-4 sm:p-6">
       <SheetHeader>
-        <SheetTitle>Your Cart</SheetTitle>
+        <SheetTitle className="text-2xl sm:text-3xl font-semibold text-center sm:text-left">
+          Your Cart
+        </SheetTitle>
       </SheetHeader>
-      <div className="mt-8 space-y-4">
+
+      <div className="mt-6 space-y-6">
         {cartItems && cartItems.length > 0
-          ? cartItems.map((item) => <UserCartItemsContent cartItem={item} />)
-          : null}
+          ? cartItems.map((item) => (
+              <UserCartItemsContent cartItem={item} key={item.productId} />
+            ))
+          : <p className="text-center text-gray-500">Your cart is empty.</p>}
       </div>
+
       <div className="mt-8 space-y-4">
-        <div className="flex justify-between">
-          <span className="font-bold">Total</span>
-          <span className="font-bold">${totalCartAmount}</span>
+        <div className="flex justify-between text-lg sm:text-xl font-semibold">
+          <span>Total</span>
+          <span>
+            ${totalCartAmount.toFixed(2)}
+          </span>
         </div>
       </div>
+
       <Button
         onClick={() => {
           navigate("/shop/checkout");
           setOpenCartSheet(false);
         }}
-        className="w-full mt-6"
+        className="w-full mt-6 py-3 sm:py-4 text-lg bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600 focus:ring-2 focus:ring-blue-400 transition"
       >
         Checkout
       </Button>

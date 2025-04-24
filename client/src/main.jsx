@@ -1,3 +1,29 @@
+// import { createRoot } from "react-dom/client";
+// import App from "./App.jsx";
+// import "./index.css";
+// import { BrowserRouter } from "react-router-dom";
+// import { Provider } from "react-redux";
+// import store from "./store/store.js";
+// import { Toaster } from "./components/ui/toaster.jsx";
+// import { checkAuth } from "./store/auth-slice";
+
+// const initializeApp = async () => {
+//   await store.dispatch(checkAuth());
+// };
+
+// createRoot(document.getElementById("root")).render(
+//   <BrowserRouter>
+//     <Provider store={store}>
+//       <App />
+//       <Toaster />
+//     </Provider>
+//   </BrowserRouter>
+// );
+
+
+
+
+
 import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
@@ -5,12 +31,19 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store/store.js";
 import { Toaster } from "./components/ui/toaster.jsx";
+import { checkAuth } from "./store/auth-slice";
 
-createRoot(document.getElementById("root")).render(
-  <BrowserRouter>
-    <Provider store={store}>
-      <App />
-      <Toaster />
-    </Provider>
-  </BrowserRouter>
-);
+const initializeApp = async () => {
+  await store.dispatch(checkAuth());
+
+  createRoot(document.getElementById("root")).render(
+    <BrowserRouter>
+      <Provider store={store}>
+        <App />
+        <Toaster />
+      </Provider>
+    </BrowserRouter>
+  );
+};
+
+initializeApp();

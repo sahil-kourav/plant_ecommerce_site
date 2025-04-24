@@ -18,12 +18,10 @@ function ProductImageUpload({
 }) {
   const inputRef = useRef(null);
 
-  console.log(isEditMode, "isEditMode");
-
   function handleImageFileChange(event) {
-    console.log(event.target.files, "event.target.files");
+    // console.log(event.target.files, "event.target.files");
     const selectedFile = event.target.files?.[0];
-    console.log(selectedFile);
+    // console.log(selectedFile);
 
     if (selectedFile) setImageFile(selectedFile);
   }
@@ -53,7 +51,7 @@ function ProductImageUpload({
       "http://localhost:5000/api/admin/products/upload-image",
       data
     );
-    console.log(response, "response");
+    // console.log(response, "response");
 
     if (response?.data?.success) {
       setUploadedImageUrl(response.data.result.url);
@@ -106,7 +104,7 @@ function ProductImageUpload({
             <Button
               variant="ghost"
               size="icon"
-              className="text-muted-foreground hover:text-foreground"
+              className="  text-primary"
               onClick={handleRemoveImage}
             >
               <XIcon className="w-4 h-4" />

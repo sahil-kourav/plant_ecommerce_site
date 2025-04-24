@@ -29,6 +29,27 @@ export const addFeatureImage = createAsyncThunk(
   }
 );
 
+// Inside common-slice.js
+export const deleteFeatureImage = createAsyncThunk(
+  "common/deleteFeatureImage",
+  async (id) => {
+    try {
+      const res = await fetch(`http://localhost:5000/api/common/feature/delete/${id}`, {
+        method: "DELETE",
+      });
+
+      // Check if response has content
+      const text = await res.text();
+      const data = text ? JSON.parse(text) : { success: true }; // default success
+
+      return data;
+    } catch (error) {
+      console.log("Delete Feature Image Error", error);
+    }
+  }
+);
+
+
 const commonSlice = createSlice({
   name: "commonSlice",
   initialState,

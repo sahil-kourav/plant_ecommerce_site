@@ -34,28 +34,31 @@ function AuthLogin() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-md space-y-6">
-      <div className="text-center">
-        <h1 className="text-3xl font-bold tracking-tight text-foreground">
-          Sign in to your account
-        </h1>
-        <p className="mt-2">
-          Don't have an account
-          <Link
-            className="font-medium ml-2 text-primary hover:underline"
-            to="/auth/register"
-          >
-            Register
-          </Link>
-        </p>
+    <div className="w-full max-w-md flex items-center justify-center bg-muted dark:bg-background">
+      <div className="w-full max-w-md bg-white dark:bg-card rounded-2xl shadow-md space-y-6 transition-all duration-300">
+        <div className="text-center space-y-2">
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">
+            Sign in to your account
+          </h1>
+          <p className="text-sm text-muted-foreground">
+            Don’t have an account?
+            <Link
+              to="/auth/register"
+              className="ml-1 text-primary hover:underline font-medium"
+            >
+              Register
+            </Link>
+          </p>
+        </div>
+
+        <CommonForm
+          formControls={loginFormControls}
+          buttonText="Sign In"
+          formData={formData}
+          setFormData={setFormData}
+          onSubmit={onSubmit}
+        />
       </div>
-      <CommonForm
-        formControls={loginFormControls}
-        buttonText={"Sign In"}
-        formData={formData}
-        setFormData={setFormData}
-        onSubmit={onSubmit}
-      />
     </div>
   );
 }

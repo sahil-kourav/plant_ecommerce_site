@@ -37,7 +37,7 @@ function SearchProducts() {
   }, [keyword]);
 
   function handleAddtoCart(getCurrentProductId, getTotalStock) {
-    console.log(cartItems);
+    // console.log(cartItems);
     let getCartItems = cartItems.items || [];
 
     if (getCartItems.length) {
@@ -74,7 +74,7 @@ function SearchProducts() {
   }
 
   function handleGetProductDetails(getCurrentProductId) {
-    console.log(getCurrentProductId);
+    // console.log(getCurrentProductId);
     dispatch(fetchProductDetails(getCurrentProductId));
   }
 
@@ -82,10 +82,10 @@ function SearchProducts() {
     if (productDetails !== null) setOpenDetailsDialog(true);
   }, [productDetails]);
 
-  console.log(searchResults, "searchResults");
+  // console.log(searchResults, "searchResults");
 
   return (
-    <div className="container mx-auto md:px-6 px-4 py-8">
+    <div className="container min-h-screen mx-auto md:px-6 px-4 py-8">
       <div className="flex justify-center mb-8">
         <div className="w-full flex items-center">
           <Input
@@ -103,6 +103,7 @@ function SearchProducts() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
         {searchResults.map((item) => (
           <ShoppingProductTile
+            key={item.id} // ← Add this line
             handleAddtoCart={handleAddtoCart}
             product={item}
             handleGetProductDetails={handleGetProductDetails}

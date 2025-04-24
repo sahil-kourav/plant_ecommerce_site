@@ -1,11 +1,10 @@
 import Address from "@/components/shopping-view/address";
-import img from "../../assets/account.jpg";
+import img from "../../assets/account-banner.png";
 import { useDispatch, useSelector } from "react-redux";
 import UserCartItemsContent from "@/components/shopping-view/cart-items-content";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { createNewOrder } from "@/store/shop/order-slice";
-import { Navigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 
 function ShoppingCheckout() {
@@ -17,10 +16,8 @@ function ShoppingCheckout() {
   const dispatch = useDispatch();
   const { toast } = useToast();
 
-  console.log(currentSelectedAddress, "cartItems");
-
   const totalCartAmount =
-    cartItems && cartItems.items && cartItems.items.length > 0
+    cartItems?.items?.length > 0
       ? cartItems.items.reduce(
           (sum, currentItem) =>
             sum +
@@ -33,38 +30,32 @@ function ShoppingCheckout() {
       : 0;
 
   function handleInitiatePaypalPayment() {
-    if (cartItems.length === 0) {
-      toast({
-        title: "Your cart is empty. Please add items to proceed",
+    if (!cartItems?.items?.length) {
+      return toast({
+        title: "Your cart is empty. Please add items to proceed.",
         variant: "destructive",
       });
-
-      return;
     }
-    if (currentSelectedAddress === null) {
-      toast({
+
+    if (!currentSelectedAddress) {
+      return toast({
         title: "Please select one address to proceed.",
         variant: "destructive",
       });
-
-      return;
     }
 
     const orderData = {
       userId: user?.id,
-      cartId: cartItems?._id,
-      cartItems: cartItems.items.map((singleCartItem) => ({
-        productId: singleCartItem?.productId,
-        title: singleCartItem?.title,
-        image: singleCartItem?.image,
-        price:
-          singleCartItem?.salePrice > 0
-            ? singleCartItem?.salePrice
-            : singleCartItem?.price,
-        quantity: singleCartItem?.quantity,
+      cartId: cartItems?.id,
+      cartItems: cartItems.items.map((item) => ({
+        productId: item?.productId,
+        title: item?.title,
+        image: item?.image,
+        price: item?.salePrice > 0 ? item?.salePrice : item?.price,
+        quantity: item?.quantity,
       })),
       addressInfo: {
-        addressId: currentSelectedAddress?._id,
+        addressId: currentSelectedAddress?.id,
         address: currentSelectedAddress?.address,
         city: currentSelectedAddress?.city,
         pincode: currentSelectedAddress?.pincode,
@@ -82,7 +73,6 @@ function ShoppingCheckout() {
     };
 
     dispatch(createNewOrder(orderData)).then((data) => {
-      console.log(data, "sangam");
       if (data?.payload?.success) {
         setIsPaymemntStart(true);
       } else {
@@ -97,37 +87,58 @@ function ShoppingCheckout() {
 
   return (
     <div className="flex flex-col">
-      <div className="relative h-[300px] w-full overflow-hidden">
-        <img src={img} className="h-full w-full object-cover object-center" />
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-5 p-5">
-        <Address
-          selectedId={currentSelectedAddress}
-          setCurrentSelectedAddress={setCurrentSelectedAddress}
+      {/* Header Image */}
+      <div className="relative h-60 sm:h-72 md:h-80 w-full overflow-hidden">
+        <img
+          src={img}
+          alt="Checkout Banner"
+          className="h-full w-full object-cover object-center"
         />
-        <div className="flex flex-col gap-4">
-          {cartItems && cartItems.items && cartItems.items.length > 0
-            ? cartItems.items.map((item) => (
-                <UserCartItemsContent cartItem={item} />
-              ))
-            : null}
-          <div className="mt-8 space-y-4">
-            <div className="flex justify-between">
-              <span className="font-bold">Total</span>
-              <span className="font-bold">${totalCartAmount}</span>
-            </div>
+      </div>
+  
+      {/* Main Checkout Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-6 px-4 sm:px-6 lg:px-12 py-6">
+        
+        {/* Left Side: Cart Summary */}
+        <div className="flex flex-col gap-6 bg-white p-4 rounded-2xl shadow-md">
+          <h2 className="text-2xl font-bold text-center border-b pb-2">Your Cart</h2>
+          <div className="max-h-[420px] overflow-y-auto space-y-5 pr-0">
+            {cartItems?.items?.length > 0 &&
+              cartItems.items.map((item, index) => (
+                <div key={index}>
+                  <UserCartItemsContent cartItem={item} />
+                </div>
+              ))}
           </div>
-          <div className="mt-4 w-full">
-            <Button onClick={handleInitiatePaypalPayment} className="w-full">
+  
+          {/* Total & Checkout */}
+          <div className="pt-4 border-t space-y-4">
+            <div className="flex justify-between text-lg font-semibold">
+              <span>Total:</span>
+              <span>${totalCartAmount.toFixed(2)}</span>
+            </div>
+            <Button
+              onClick={handleInitiatePaypalPayment}
+              className="w-full text-base py-5"
+              disabled={isPaymentStart}
+            >
               {isPaymentStart
                 ? "Processing Paypal Payment..."
                 : "Checkout with Paypal"}
             </Button>
           </div>
         </div>
+  
+        {/* Right Side: Address */}
+        <div className="bg-white p-6 rounded-2xl shadow-md">
+          <h2 className="text-2xl font-bold text-center border-b pb-2">Select Delivery Address</h2>
+          <Address
+            selectedId={currentSelectedAddress}
+            setCurrentSelectedAddress={setCurrentSelectedAddress}
+          />
+        </div>
       </div>
     </div>
   );
-}
-
+}  
 export default ShoppingCheckout;

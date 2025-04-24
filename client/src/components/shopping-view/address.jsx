@@ -31,10 +31,10 @@ function Address({ setCurrentSelectedAddress, selectedId }) {
   function handleManageAddress(event) {
     event.preventDefault();
 
-    if (addressList.length >= 3 && currentEditedId === null) {
+    if (addressList.length >= 2 && currentEditedId === null) {
       setFormData(initialAddressFormData);
       toast({
-        title: "You can add max 3 addresses",
+        title: "You can add max 2 addresses",
         variant: "destructive",
       });
 
@@ -76,7 +76,7 @@ function Address({ setCurrentSelectedAddress, selectedId }) {
 
   function handleDeleteAddress(getCurrentAddress) {
     dispatch(
-      deleteAddress({ userId: user?.id, addressId: getCurrentAddress._id })
+      deleteAddress({ userId: user?.id, addressId: getCurrentAddress.id })
     ).then((data) => {
       if (data?.payload?.success) {
         dispatch(fetchAllAddresses(user?.id));
@@ -88,7 +88,7 @@ function Address({ setCurrentSelectedAddress, selectedId }) {
   }
 
   function handleEditAddress(getCuurentAddress) {
-    setCurrentEditedId(getCuurentAddress?._id);
+    setCurrentEditedId(getCuurentAddress?.id);
     setFormData({
       ...formData,
       address: getCuurentAddress?.address,
@@ -136,7 +136,7 @@ function Address({ setCurrentSelectedAddress, selectedId }) {
           formControls={addressFormControls}
           formData={formData}
           setFormData={setFormData}
-          buttonText={currentEditedId !== null ? "Edit" : "Add"}
+          buttonText={currentEditedId !== null ? "Save Changes" : "Add New Address"}
           onSubmit={handleManageAddress}
           isBtnDisabled={!isFormValid()}
         />

@@ -7,6 +7,13 @@ export const registerFormControls = [
     type: "text",
   },
   {
+    name: "number",
+    label: "Phone Number",
+    placeholder: "Enter your phone number",
+    componentType: "input",
+    type: "number",
+  },
+  {
     name: "email",
     label: "Email",
     placeholder: "Enter your email",
@@ -15,7 +22,7 @@ export const registerFormControls = [
   },
   {
     name: "password",
-    label: "Password",
+    label: "Create Password",
     placeholder: "Enter your password",
     componentType: "input",
     type: "password",
@@ -58,26 +65,13 @@ export const addProductFormElements = [
     name: "category",
     componentType: "select",
     options: [
-      { id: "men", label: "Men" },
-      { id: "women", label: "Women" },
-      { id: "kids", label: "Kids" },
-      { id: "accessories", label: "Accessories" },
-      { id: "footwear", label: "Footwear" },
+      { id: "indoor", label: "Indoor Plants" },
+      { id: "outdoor", label: "Outdoor Plants" },
+      { id: "flowering", label: "Flowering Plants" },
+      { id: "gifting", label: "Gifting Plants"}
     ],
   },
-  {
-    label: "Brand",
-    name: "brand",
-    componentType: "select",
-    options: [
-      { id: "nike", label: "Nike" },
-      { id: "adidas", label: "Adidas" },
-      { id: "puma", label: "Puma" },
-      { id: "levi", label: "Levi's" },
-      { id: "zara", label: "Zara" },
-      { id: "h&m", label: "H&M" },
-    ],
-  },
+  
   {
     label: "Price",
     name: "price",
@@ -108,76 +102,54 @@ export const shoppingViewHeaderMenuItems = [
     path: "/shop/home",
   },
   {
-    id: "products",
-    label: "Products",
-    path: "/shop/listing",
-  },
-  {
-    id: "men",
-    label: "Men",
-    path: "/shop/listing",
-  },
-  {
-    id: "women",
-    label: "Women",
-    path: "/shop/listing",
-  },
-  {
-    id: "kids",
-    label: "Kids",
-    path: "/shop/listing",
-  },
-  {
-    id: "footwear",
-    label: "Footwear",
-    path: "/shop/listing",
-  },
-  {
-    id: "accessories",
-    label: "Accessories",
-    path: "/shop/listing",
-  },
-  {
     id: "search",
     label: "Search",
     path: "/shop/search",
   },
+  {
+    id: "products",
+    label: "All Plants",
+    path: "/shop/listing",
+  },
+  {
+    id: "indoor",
+    label: "Indoor Plants",
+    path: "/shop/listing?category=indoor",
+  },
+  {
+    id: "outdoor",
+    label: "Outdoor Plants",
+    path: "/shop/listing?category=outdoor",
+  },
+  {
+    id: "flowering",
+    label: "Flowering Plants",
+    path: "/shop/listing?category=flowering",
+  },
+  {
+    id: "gifting",
+    label: "Gifting Plants",
+    path: "/shop/listing?category=gifting",
+  },
 ];
 
-export const categoryOptionsMap = {
-  men: "Men",
-  women: "Women",
-  kids: "Kids",
-  accessories: "Accessories",
-  footwear: "Footwear",
-};
 
-export const brandOptionsMap = {
-  nike: "Nike",
-  adidas: "Adidas",
-  puma: "Puma",
-  levi: "Levi",
-  zara: "Zara",
-  "h&m": "H&M",
+export const categoryOptionsMap = {
+  indoor: "Indoor Plants",
+  outdoor: "Outdoor Plants",
+  flowering: "Flowering Plants",
+  gifting: "Gifting Plants",
 };
 
 export const filterOptions = {
   category: [
-    { id: "men", label: "Men" },
-    { id: "women", label: "Women" },
-    { id: "kids", label: "Kids" },
-    { id: "accessories", label: "Accessories" },
-    { id: "footwear", label: "Footwear" },
-  ],
-  brand: [
-    { id: "nike", label: "Nike" },
-    { id: "adidas", label: "Adidas" },
-    { id: "puma", label: "Puma" },
-    { id: "levi", label: "Levi's" },
-    { id: "zara", label: "Zara" },
-    { id: "h&m", label: "H&M" },
+    { id: "indoor", label: "Indoor Plants" },
+    { id: "outdoor", label: "Outdoor Plants" },
+    { id: "flowering", label: "Flowering Plants" },
+    { id: "gifting", label: "Gifting Plants"},
   ],
 };
+
 
 export const sortOptions = [
   { id: "price-lowtohigh", label: "Price: Low to High" },

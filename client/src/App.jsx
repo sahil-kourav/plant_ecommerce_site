@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation  } from "react-router-dom";
 import AuthLayout from "./components/auth/layout";
 import AuthLogin from "./pages/auth/login";
 import AuthRegister from "./pages/auth/register";
@@ -22,20 +22,25 @@ import { Skeleton } from "@/components/ui/skeleton";
 import PaypalReturnPage from "./pages/shopping-view/paypal-return";
 import PaymentSuccessPage from "./pages/shopping-view/payment-success";
 import SearchProducts from "./pages/shopping-view/search";
+import Footer from "./pages/shopping-view/Footer";
+import Testimonials from "./pages/shopping-view/Testimonials";
+import AboutusPage from "./pages/shopping-view/quickLinks/aboutusPage";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
     (state) => state.auth
   );
   const dispatch = useDispatch();
+  const location = useLocation();
 
   useEffect(() => {
     dispatch(checkAuth());
   }, [dispatch]);
 
   if (isLoading) return <Skeleton className="w-[800] bg-black h-[600px]" />;
+  const isAdminPath = location.pathname.startsWith("/admin");
 
-  console.log(isLoading, user);
+  // console.log(isLoading, user);
 
   return (
     <div className="flex flex-col overflow-hidden bg-white">
@@ -82,6 +87,7 @@ function App() {
           }
         >
           <Route path="home" element={<ShoppingHome />} />
+          <Route path="about" element={<AboutusPage />} />
           <Route path="listing" element={<ShoppingListing />} />
           <Route path="checkout" element={<ShoppingCheckout />} />
           <Route path="account" element={<ShoppingAccount />} />
@@ -92,6 +98,7 @@ function App() {
         <Route path="/unauth-page" element={<UnauthPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      {!isAdminPath && <Footer />}
     </div>
   );
 }

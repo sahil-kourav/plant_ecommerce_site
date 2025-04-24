@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CommonForm from "../common/form";
 import { DialogContent } from "../ui/dialog";
 import { Label } from "../ui/label";
@@ -22,17 +22,16 @@ function AdminOrderDetailsView({ orderDetails }) {
   const dispatch = useDispatch();
   const { toast } = useToast();
 
-  console.log(orderDetails, "orderDetailsorderDetails");
 
   function handleUpdateStatus(event) {
     event.preventDefault();
     const { status } = formData;
 
     dispatch(
-      updateOrderStatus({ id: orderDetails?._id, orderStatus: status })
+      updateOrderStatus({ id: orderDetails?.id, orderStatus: status })
     ).then((data) => {
       if (data?.payload?.success) {
-        dispatch(getOrderDetailsForAdmin(orderDetails?._id));
+        dispatch(getOrderDetailsForAdmin(orderDetails?.id));
         dispatch(getAllOrdersForAdmin());
         setFormData(initialFormData);
         toast({
@@ -43,30 +42,30 @@ function AdminOrderDetailsView({ orderDetails }) {
   }
 
   return (
-    <DialogContent className="sm:max-w-[600px]">
-      <div className="grid gap-6">
+    <DialogContent className="sm:max-w-[650px]">
+      <div className="grid gap-4">
         <div className="grid gap-2">
-          <div className="flex mt-6 items-center justify-between">
+          <div className="flex items-center justify-between">
             <p className="font-medium">Order ID</p>
-            <Label>{orderDetails?._id}</Label>
+            <Label>{orderDetails?.id}</Label>
           </div>
-          <div className="flex mt-2 items-center justify-between">
+          <div className="flex items-center justify-between">
             <p className="font-medium">Order Date</p>
             <Label>{orderDetails?.orderDate.split("T")[0]}</Label>
           </div>
-          <div className="flex mt-2 items-center justify-between">
+          <div className="flex items-center justify-between">
             <p className="font-medium">Order Price</p>
             <Label>${orderDetails?.totalAmount}</Label>
           </div>
-          <div className="flex mt-2 items-center justify-between">
+          <div className="flex items-center justify-between">
             <p className="font-medium">Payment method</p>
             <Label>{orderDetails?.paymentMethod}</Label>
           </div>
-          <div className="flex mt-2 items-center justify-between">
+          <div className="flex items-center justify-between">
             <p className="font-medium">Payment Status</p>
             <Label>{orderDetails?.paymentStatus}</Label>
           </div>
-          <div className="flex mt-2 items-center justify-between">
+          <div className="flex items-center justify-between">
             <p className="font-medium">Order Status</p>
             <Label>
               <Badge
@@ -88,28 +87,53 @@ function AdminOrderDetailsView({ orderDetails }) {
           <div className="grid gap-2">
             <div className="font-medium">Order Details</div>
             <ul className="grid gap-3">
-              {orderDetails?.cartItems && orderDetails?.cartItems.length > 0
-                ? orderDetails?.cartItems.map((item) => (
-                    <li className="flex items-center justify-between">
-                      <span>Title: {item.title}</span>
-                      <span>Quantity: {item.quantity}</span>
-                      <span>Price: ${item.price}</span>
-                    </li>
-                  ))
-                : null}
+              {orderDetails?.items && orderDetails.items.length > 0 ? (
+                orderDetails.items.map((item, index) => (
+                  <li
+                    key={item.id || index}
+                    className="flex items-center justify-between"
+                  >
+                    <span>Title: {item.title}</span>
+                    <span>Quantity: {item.quantity}</span>
+                    <span>Price: ${item.price}</span>
+                  </li>
+                ))
+              ) : (
+                <li>No items found in this order.</li>
+              )}
             </ul>
           </div>
         </div>
         <div className="grid gap-4">
           <div className="grid gap-2">
             <div className="font-medium">Shipping Info</div>
-            <div className="grid gap-0.5 text-muted-foreground">
-              <span>{user.userName}</span>
-              <span>{orderDetails?.addressInfo?.address}</span>
-              <span>{orderDetails?.addressInfo?.city}</span>
-              <span>{orderDetails?.addressInfo?.pincode}</span>
-              <span>{orderDetails?.addressInfo?.phone}</span>
-              <span>{orderDetails?.addressInfo?.notes}</span>
+            <div className="grid gap-0.5">
+              <div className="grid gap-2 text-md">
+                <div className="flex items-center justify-between">
+                  <span className="font-medium text-primary">Recipient:</span>{" "}
+                  {orderDetails?.user?.userName || "N/A"}
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="font-medium text-primary">
+                    Shipping Address:
+                  </span>{" "}
+                  {[
+                    orderDetails?.address?.address,
+                    orderDetails?.address?.city,
+                    orderDetails?.address?.pincode,
+                  ]
+                    .filter(Boolean)
+                    .join(", ") || "N/A"}
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="font-medium text-primary">Phone:</span>{" "}
+                  {orderDetails?.address?.phone || "N/A"}
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="font-medium text-primary">Notes:</span>{" "}
+                  {orderDetails?.address?.notes || "N/A"}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -122,11 +146,11 @@ function AdminOrderDetailsView({ orderDetails }) {
                 name: "status",
                 componentType: "select",
                 options: [
-                  { id: "pending", label: "Pending" },
-                  { id: "inProcess", label: "In Process" },
-                  { id: "inShipping", label: "In Shipping" },
-                  { id: "delivered", label: "Delivered" },
-                  { id: "rejected", label: "Rejected" },
+                  { id: "Pending", label: "Pending" },
+                  { id: "InProcess", label: "In Process" },
+                  { id: "InShipping", label: "In Shipping" },
+                  { id: "Delivered", label: "Delivered" },
+                  { id: "Rejected", label: "Rejected" },
                 ],
               },
             ]}
