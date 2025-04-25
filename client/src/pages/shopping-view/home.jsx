@@ -121,8 +121,11 @@ function ShoppingHome() {
 
   return (
     <div className="flex flex-col min-h-screen">
+
       {/* Hero Slider */}
-      <div className="relative mt-10 rounded-xl w-full sm:w-[582px] md:w-[780px] lg:w-[931px] xl:w-[1160px] 2xl:w-[1396px] mx-auto h-[273px] sm:h-[455px] lg:h-[637px] overflow-hidden">
+      {/* <div className="relative rounded-lg w-full sm:w-[682px] md:w-[780px] lg:w-[951px] xl:w-[1290px] mx-auto h-[273px] sm:h-[455px] lg:h-[600px] mt-5 overflow-hidden"> */}
+      <div className="relative rounded-lg w-[90%] xs:w-[90%] sm:w-[90%] md:w-[90%] lg:w-[90%] xl:w-[90%] mx-auto h-[200px] xs:h-[180px] sm:h-[250px] md:h-[300px] lg:h-[400px] xl:h-[600px] mt-10 overflow-hidden">
+
 
         {featureImageList?.map((slide, index) => (
           <img
@@ -159,7 +162,10 @@ function ShoppingHome() {
       </div>
 
       {/* Shop by Category */}
-      <section className="flex flex-col items-center py-10 px-4 ">
+    {/* <div className="flex flex-col min-h-screen mx-4 sm:mx-6 md:mx-4 lg:mx-12">
+      <section className="flex flex-col items-center py-10 px-4 "> */}
+      <div className="flex flex-col min-h-screen mx-4 sm:mx-6 md:mx-4 lg:mx-12">
+      <section className="flex flex-col items-center py-12 px-4 w-[100%] sm:w-[90%] md:w-[90%] lg:w-auto">
         <div className="w-full max-w-6xl">
           <h2 className="text-3xl sm:text-4xl font-semibold text-center mt-5 mb-10 text-green-800">
             Shop by <span className="text-primary">Category</span>
@@ -179,7 +185,7 @@ function ShoppingHome() {
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <span className="text-center font-semibold text-gray-800 text-base sm:text-lg">
+                  <span className="text-center font-semibold text-gray-800 text-sm sm:text-base md:text-lg lg:text-xl">
                     {categoryItem.label}
                   </span>
                 </CardContent>
@@ -195,9 +201,9 @@ function ShoppingHome() {
         if (!products || products.length === 0) return null;
 
         return (
-          <section key={categoryItem.id} className="py-6 px-4 bg-white">
+          <section key={categoryItem.id} className="py-6 px-2 bg-white">
             <div className="max-w-6xl mx-auto">
-              <h3 className="text-3xl text-center font-semibold text-green-800 mb-8">
+<h3 className="text-3xl sm:text-3xl md:text-3xl lg:text-3xl text-center mb-10 text-gray-800">
                 {categoryItem.professionalLabel}
               </h3>
 
@@ -231,6 +237,7 @@ function ShoppingHome() {
         productDetails={productDetails}
       />
        <Testimonials />
+       </div>
     </div>
   );
 }

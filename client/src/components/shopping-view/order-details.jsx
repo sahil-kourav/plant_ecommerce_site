@@ -10,9 +10,9 @@ function ShoppingOrderDetailsView({ orderDetails }) {
   const { user } = useSelector((state) => state.auth);
 
   // console.log(orderDetails.id || "aman");
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
   return (
-    <DialogContent className="max-w-full sm:max-w-[600px] px-4 sm:px-6 py-8">
+    <DialogContent className="max-w-full sm:max-w-[600px] max-h-[80vh] overflow-y-auto px-4 sm:px-6 py-8 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
       <div className="grid gap-6 text-sm sm:text-base">
         {/* Order Summary */}
         <div className="grid gap-4">
@@ -22,13 +22,11 @@ function ShoppingOrderDetailsView({ orderDetails }) {
             <DetailRow label="Order ID" value={orderDetails?.id} />
             <DetailRow
               label="Order Date"
-              // value={orderDetails?.orderDate?.split("T")[0]}
               value={
                 orderDetails?.orderDate
                   ? new Date(orderDetails.orderDate).toLocaleDateString("en-GB")
                   : "Not Available"
               }
-              
             />
             <DetailRow
               label="Order Price"
@@ -69,45 +67,29 @@ function ShoppingOrderDetailsView({ orderDetails }) {
               orderDetails.items.map((item, index) => (
                 <li
                   key={index}
-                  className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4 border p-3 rounded-md bg-gray-50"
+                  className="flex flex-col justify-between gap-2 sm:gap-2 border p-3 rounded-md"
                 >
-                  <span className="text-gray-800 font-medium">
+                  <div className="flex items-center justify-between">
+                    <span className="font-medium text-primary">Title: </span>
                     {item.title}
-                  </span>
-                  <span>Qty: {item.quantity}</span>
-                  <span className="font-semibold">${item.price}</span>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <span className="font-medium text-primary">Quantity: </span>
+                    <span>{item.quantity}</span>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <span className="font-medium text-primary">Price: </span>
+                    <span>${item.price}</span>
+                  </div>
                 </li>
               ))}
           </ul>
         </div>
-
         <Separator />
 
-        {/* Shipping Info */}
-        {/* <div className="grid gap-3">
-          <h2 className="text-lg font-semibold text-gray-900">
-            Shipping Information
-          </h2>
-          <div className="grid gap-1 text-muted-foreground">
-            <span className="text-gray-900 font-medium">{user?.userName}</span>
-            <span className="text-gray-700">
-              {orderDetails?.address?.address}
-            </span>
-            <span className="text-gray-700">
-              {orderDetails?.address?.city} -{" "}
-              {orderDetails?.address?.pincode}
-            </span>
-            <span className="text-gray-700">
-              Phone: {orderDetails?.address?.phone}
-            </span>
-            {orderDetails?.address?.notes && (
-              <span className="italic">{orderDetails.address.notes}</span>
-            )}
-          </div>
-        </div>
-      </div> */}
-
-<div className="grid gap-4">
+        <div className="grid gap-4">
           <div className="grid gap-2">
             <div className="font-medium">Shipping Info</div>
             <div className="grid gap-0.5">
@@ -140,8 +122,7 @@ function ShoppingOrderDetailsView({ orderDetails }) {
             </div>
           </div>
         </div>
-
-</div>
+      </div>
     </DialogContent>
   );
 }

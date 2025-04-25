@@ -1,5 +1,5 @@
 import Address from "@/components/shopping-view/address";
-import img from "../../assets/account-banner.png";
+import img from "../../assets/checkout_banner.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import UserCartItemsContent from "@/components/shopping-view/cart-items-content";
 import { Button } from "@/components/ui/button";
@@ -88,11 +88,11 @@ function ShoppingCheckout() {
   return (
     <div className="flex flex-col">
       {/* Header Image */}
-      <div className="relative h-60 sm:h-72 md:h-80 w-full overflow-hidden">
+      <div className="relative h-60 sm:h-52 md:h-60 w-full overflow-hidden">
         <img
           src={img}
           alt="Checkout Banner"
-          className="h-full w-full object-cover object-center"
+          className="h-full w-full object-cover object-right"
         />
       </div>
   

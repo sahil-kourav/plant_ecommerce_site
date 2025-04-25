@@ -43,7 +43,7 @@ export default function Testimonials() {
 
   return (
     <section className="text-center py-12 px-4 bg-white">
-      <h2 className="text-2xl sm:text-3xl font-semibold text-green-900 mb-10">
+      <h2 className="text-3xl sm:text-3xl font-semibold text-green-900 mb-10">
       Loved by Plant Lovers
       </h2>
 
@@ -52,16 +52,8 @@ export default function Testimonials() {
           slidesPerView={1}
           spaceBetween={30}
           loop={true}
-          autoplay={{ delay: 2000, disableOnInteraction: false }}
-          modules={[Navigation, Autoplay]}
-          navigation={{
-            prevEl: prevRef.current,
-            nextEl: nextRef.current,
-          }}
-          onBeforeInit={(swiper) => {
-            swiper.params.navigation.prevEl = prevRef.current;
-            swiper.params.navigation.nextEl = nextRef.current;
-          }}
+          autoplay={{ delay: 1600, disableOnInteraction: false }}
+          modules={[Autoplay]}
         >
           {testimonials.map((testimonial, index) => (
             <SwiperSlide key={index}>
@@ -86,20 +78,6 @@ export default function Testimonials() {
             </SwiperSlide>
           ))}
         </Swiper>
-
-        {/* Actual Buttons */}
-        <div
-          ref={prevRef}
-          className="absolute top-1/2 left-0 -translate-y-1/2 cursor-pointer text-gray-500 z-10"
-        >
-          <MoveLeft size={20} />
-        </div>
-        <div
-          ref={nextRef}
-          className="absolute top-1/2 right-0 -translate-y-1/2 cursor-pointer text-gray-500 z-10"
-        >
-          <MoveRight size={20} />
-        </div>
       </div>
     </section>
   );

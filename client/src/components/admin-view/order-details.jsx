@@ -22,7 +22,6 @@ function AdminOrderDetailsView({ orderDetails }) {
   const dispatch = useDispatch();
   const { toast } = useToast();
 
-
   function handleUpdateStatus(event) {
     event.preventDefault();
     const { status } = formData;
@@ -42,7 +41,8 @@ function AdminOrderDetailsView({ orderDetails }) {
   }
 
   return (
-    <DialogContent className="sm:max-w-[650px]">
+    // <DialogContent className="sm:max-w-[650px]">
+    <DialogContent className="max-w-full sm:max-w-[600px] max-h-[80vh] overflow-y-auto px-4 sm:px-6 py-8 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
       <div className="grid gap-4">
         <div className="grid gap-2">
           <div className="flex items-center justify-between">
@@ -51,11 +51,11 @@ function AdminOrderDetailsView({ orderDetails }) {
           </div>
           <div className="flex items-center justify-between">
             <p className="font-medium">Order Date</p>
-            <Label>{
-                orderDetails?.orderDate
-                  ? new Date(orderDetails.orderDate).toLocaleDateString("en-GB")
-                  : "Not Available"
-              }</Label>
+            <Label>
+              {orderDetails?.orderDate
+                ? new Date(orderDetails.orderDate).toLocaleDateString("en-GB")
+                : "Not Available"}
+            </Label>
           </div>
           <div className="flex items-center justify-between">
             <p className="font-medium">Order Price</p>
@@ -95,11 +95,24 @@ function AdminOrderDetailsView({ orderDetails }) {
                 orderDetails.items.map((item, index) => (
                   <li
                     key={item.id || index}
-                    className="flex items-center justify-between"
+                    className="flex flex-col justify-between gap-2 sm:gap-2 border p-3 rounded-md"
                   >
-                    <span>Title: {item.title}</span>
-                    <span>Quantity: {item.quantity}</span>
-                    <span>Price: ${item.price}</span>
+                    <div className="flex items-center justify-between">
+                      <span className="font-medium text-primary">Title: </span>
+                      {item.title}
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <span className="font-medium text-primary">
+                        Quantity:{" "}
+                      </span>
+                      <span>{item.quantity}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <span className="font-medium text-primary">Price: </span>
+                      <span>${item.price}</span>
+                    </div>
                   </li>
                 ))
               ) : (
