@@ -44,7 +44,7 @@ export const deleteFeatureImage = createAsyncThunk(
 
       return data;
     } catch (error) {
-      console.log("Delete Feature Image Error", error);
+      // console.log("Delete Feature Image Error", error);
     }
   }
 );

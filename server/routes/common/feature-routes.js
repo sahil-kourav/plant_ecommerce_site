@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.post("/add", addFeatureImage);
 router.get("/get", getFeatureImages);
-router.delete("/delete/:id", deleteFeatureImage); // <-- Add this line
+router.delete("/delete/:id", deleteFeatureImage);
 
 module.exports = router;
 

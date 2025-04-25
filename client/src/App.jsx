@@ -24,7 +24,7 @@ import PaymentSuccessPage from "./pages/shopping-view/payment-success";
 import SearchProducts from "./pages/shopping-view/search";
 import Footer from "./pages/shopping-view/Footer";
 import Testimonials from "./pages/shopping-view/Testimonials";
-import AboutusPage from "./pages/shopping-view/quickLinks/aboutusPage";
+import AboutusPage from "./pages/shopping-view/quick-Links/aboutusPage";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
@@ -47,11 +47,6 @@ function App() {
   ];
   const isAdminPath = location.pathname.startsWith("/admin");
   const hideFooter = isAdminPath || noFooterRoutes.includes(location.pathname);
-  
-  // later in return:
-  
-
-  // console.log(isLoading, user);
 
   return (
     <div className="flex flex-col overflow-hidden bg-white">

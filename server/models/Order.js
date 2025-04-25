@@ -252,8 +252,8 @@ const Order = sequelize.define("Order", {
   },
 }, {
   tableName: "orders",
-  timestamps: true,               // ✅ This enables createdAt and updatedAt
-  createdAt: "orderDate",         // Optional: rename if you want custom field name
+  timestamps: true,              
+  createdAt: "orderDate",       
   updatedAt: "updatedDate", 
 });
 

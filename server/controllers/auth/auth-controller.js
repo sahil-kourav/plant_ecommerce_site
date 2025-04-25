@@ -1,166 +1,9 @@
-// // const bcrypt = require("bcryptjs");
-// // const jwt = require("jsonwebtoken");
-// // const User = require("../../models/User");
-
-// // //register
-// // const registerUser = async (req, res) => {
-// //   const { userName, email, password, number } = req.body;
-// //   if (!userName || !email || !password || !number) {
-// //     return res.json({
-// //       success: false,
-// //       message: "Please fill in all required details.",
-// //     });
-// //   }
-
-// //   try {
-// //     // Check for existing email
-// //     const checkEmail = await User.findOne({ email });
-// //     if (checkEmail) {
-// //       return res.json({
-// //         success: false,
-// //         message: "User already exists with this email! Please try again.",
-// //       });
-// //     }
-
-// //     // Check for existing mobile number
-// //     const checkNumber = await User.findOne({ number });
-// //     if (checkNumber) {
-// //       return res.json({
-// //         success: false,
-// //         message: "Mobile number is already registered! Please try again.",
-// //       });
-// //     }
-
-// //     const hashPassword = await bcrypt.hash(password, 12);
-
-// //     const newUser = new User({
-// //       userName,
-// //       email,
-// //       number,
-// //       password: hashPassword,
-// //     });
-
-// //     await newUser.save();
-
-// //     res.status(200).json({
-// //       success: true,
-// //       message: "Registration successful",
-// //     });
-
-// //   } catch (e) {
-// //     console.log(e);
-// //     res.status(500).json({
-// //       success: false,
-// //       message: "Some error occurred",
-// //     });
-// //   }
-// // };
-
-// // //login
-// // const loginUser = async (req, res) => {
-// //   const { email, password } = req.body;
-// //   if ( !email || !password ) {
-// //     return res.json({
-// //       success: false,
-// //       message: "Please fill in all required details.",
-// //     });
-// //   }
-
-// //   try {
-// //     const checkUser = await User.findOne({ email });
-// //     if (!checkUser)
-// //       return res.json({
-// //         success: false,
-// //         message: "User doesn't exists! Please register first",
-// //       });
-
-// //     const checkPasswordMatch = await bcrypt.compare(
-// //       password,
-// //       checkUser.password
-// //     );
-// //     if (!checkPasswordMatch)
-// //       return res.json({
-// //         success: false,
-// //         message: "Incorrect email or password! Please try again",
-// //       });
-
-// //     const token = jwt.sign(
-// //       {
-// //         id: checkUser._id,
-// //         role: checkUser.role,
-// //         email: checkUser.email,
-// //         userName: checkUser.userName,
-// //       },
-// //       "CLIENT_SECRET_KEY",
-// //       { expiresIn: "60m" }
-// //     );
-
-// //     res.cookie("token", token, { httpOnly: true, secure: false }).json({
-// //       success: true,
-// //       message: "Logged in successfully",
-// //       user: {
-// //         email: checkUser.email,
-// //         role: checkUser.role,
-// //         id: checkUser._id,
-// //         userName: checkUser.userName,
-// //       },
-// //     });
-// //   } catch (e) {
-// //     console.log(e);
-// //     res.status(500).json({
-// //       success: false,
-// //       message: "Some error occured",
-// //     });
-// //   }
-// // };
-
-// // //logout
-
-// // const logoutUser = (req, res) => {
-// //   res.clearCookie("token").json({
-// //     success: true,
-// //     message: "Logged out successfully!",
-// //   });
-// // };
-
-// // //auth middleware
-// // const authMiddleware = async (req, res, next) => {
-// //   const token = req.cookies.token;
-// //   if (!token)
-// //     return res.status(401).json({
-// //       success: false,
-// //       message: "Unauthorised user!",
-// //     });
-
-// //   try {
-// //     const decoded = jwt.verify(token, "CLIENT_SECRET_KEY");
-// //     req.user = decoded;
-// //     next();
-// //   } catch (error) {
-// //     res.status(401).json({
-// //       success: false,
-// //       message: "Unauthorised user!",
-// //     });
-// //   }
-// // };
-
-// // module.exports = { registerUser, loginUser, logoutUser, authMiddleware };
-
-
-
-
-
-
-
-
-
-
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { User } = require("../../models");
 const { generateToken } = require("../../utils/generateToken");
 
-// ========== REGISTER ==========
+
 const registerUser = async (req, res) => {
   const { userName, email, password, number, role = "user" } = req.body;
 
@@ -222,7 +65,6 @@ const registerUser = async (req, res) => {
   }
 };
 
-// ========== LOGIN ==========
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -260,7 +102,6 @@ const loginUser = async (req, res) => {
   }
 };
 
-// ========== LOGOUT ==========
 const logoutUser = (req, res) => {
   res.clearCookie("token").status(200).json({
     success: true,
