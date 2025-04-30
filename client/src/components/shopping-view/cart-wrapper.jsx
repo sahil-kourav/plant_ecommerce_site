@@ -39,7 +39,7 @@ function UserCartWrapper({ cartItems, setOpenCartSheet }) {
         <div className="flex justify-between text-lg sm:text-xl font-semibold">
           <span>Total</span>
           <span>
-            ${totalCartAmount.toFixed(2)}
+          ₹{totalCartAmount.toFixed(2)}
           </span>
         </div>
       </div>

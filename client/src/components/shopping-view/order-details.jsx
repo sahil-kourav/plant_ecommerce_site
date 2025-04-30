@@ -30,7 +30,7 @@ function ShoppingOrderDetailsView({ orderDetails }) {
             />
             <DetailRow
               label="Order Price"
-              value={`$${orderDetails?.totalAmount}`}
+              value={`₹${orderDetails?.totalAmount}`}
             />
             <DetailRow
               label="Payment Method"
@@ -81,7 +81,7 @@ function ShoppingOrderDetailsView({ orderDetails }) {
 
                   <div className="flex items-center justify-between">
                     <span className="font-medium text-primary">Price: </span>
-                    <span>${item.price}</span>
+                    <span>₹{item.price}</span>
                   </div>
                 </li>
               ))}

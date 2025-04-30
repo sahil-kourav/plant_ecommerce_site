@@ -46,7 +46,7 @@ function ShoppingProductTile({
           <div className="flex gap-2 items-center">
             {product?.salePrice > 0 && (
               <span className="text-base font-semibold">
-                ${product?.salePrice}
+                ₹{product?.salePrice}
               </span>
             )}
             <span
@@ -56,7 +56,7 @@ function ShoppingProductTile({
                   : "text-primary"
               } text-base font-semibold`}
             >
-              ${product?.price}
+              ₹{product?.price}
             </span>
           </div>
         </CardContent>

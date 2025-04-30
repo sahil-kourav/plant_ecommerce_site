@@ -59,7 +59,7 @@ function AdminOrderDetailsView({ orderDetails }) {
           </div>
           <div className="flex items-center justify-between">
             <p className="font-medium">Order Price</p>
-            <Label>${orderDetails?.totalAmount}</Label>
+            <Label>₹{orderDetails?.totalAmount}</Label>
           </div>
           <div className="flex items-center justify-between">
             <p className="font-medium">Payment method</p>
@@ -111,7 +111,7 @@ function AdminOrderDetailsView({ orderDetails }) {
 
                     <div className="flex items-center justify-between">
                       <span className="font-medium text-primary">Price: </span>
-                      <span>${item.price}</span>
+                      <span>₹{item.price}</span>
                     </div>
                   </li>
                 ))

@@ -1,4 +1,4 @@
-require("dotenv").config(); // Make sure this is at the top
+require("dotenv").config();
 
 const paypal = require("paypal-rest-sdk");
 

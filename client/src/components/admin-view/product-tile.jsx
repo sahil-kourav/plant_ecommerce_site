@@ -30,11 +30,11 @@ function AdminProductTile({
                 product?.salePrice > 0 ? "line-through text-gray-400" : "text-primary"
               } text-base font-semibold`}
             >
-              ${product?.price}
+              ₹{product?.price}
             </span>
             {product?.salePrice > 0 && (
               <span className="text-base font-bold text-green-600">
-                ${product?.salePrice}
+                ₹{product?.salePrice}
               </span>
             )}
           </div>

@@ -21,6 +21,23 @@ export const createNewOrder = createAsyncThunk(
   }
 );
 
+export const createCodOrder = createAsyncThunk(
+  "/order/createCodOrder",
+  async (orderData) => {
+    const response = await axios.post(
+      "http://localhost:5000/api/shop/order/create",
+      {
+        ...orderData,
+        paymentMethod: "cod",
+        paymentStatus: false,
+        orderStatus: "Order Placed",
+      }
+    );
+    return response.data;
+  }
+);
+
+
 export const capturePayment = createAsyncThunk(
   "/order/capturePayment",
   async ({ paymentId, payerId, orderId }) => {
@@ -85,6 +102,25 @@ const shoppingOrderSlice = createSlice({
         state.approvalURL = null;
         state.orderId = null;
       })
+
+
+      .addCase(createCodOrder.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createCodOrder.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.orderId = action.payload.orderId;
+        sessionStorage.setItem(
+          "currentOrderId",
+          JSON.stringify(action.payload.orderId)
+        );
+      })
+      .addCase(createCodOrder.rejected, (state) => {
+        state.isLoading = false;
+        state.orderId = null;
+      })
+
+      
       .addCase(getAllOrdersByUserId.pending, (state) => {
         state.isLoading = true;
       })

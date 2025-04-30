@@ -18,7 +18,6 @@ const createOrder = async (req, res) => {
       cartId,
     } = req.body;
 
-    // Validate required fields, especially addressId
     const { addressId, address, city, pincode, phone, notes } = addressInfo;
 
     if (!addressId || !address || !city || !pincode || !phone || !notes) {
@@ -28,6 +27,51 @@ const createOrder = async (req, res) => {
       });
     }
 
+    // ✅ COD logic (skip PayPal)
+    if (paymentMethod === "cod") {
+      const codOrder = await Order.create({
+        userId,
+        cartId,
+        orderStatus: "Order Placed",
+        paymentMethod: "cod",
+        paymentStatus: false,
+        totalAmount,
+        orderDate: new Date(),
+        orderUpdateDate: new Date(),
+      });
+
+      for (const item of cartItems) {
+        await OrderItem.create({
+          orderId: codOrder.id,
+          productId: item.productId,
+          title: item.title,
+          image: item.image,
+          price: item.price,
+          quantity: item.quantity,
+          orderDate: new Date(),
+        });
+      }
+
+      await OrderAddress.create({
+        orderId: codOrder.id,
+        addressId,
+        address,
+        city,
+        pincode,
+        phone,
+        notes,
+      });
+
+      await Cart.destroy({ where: { id: cartId } });
+
+      return res.status(201).json({
+        success: true,
+        message: "COD Order Placed Successfully",
+        orderId: codOrder.id,
+      });
+    }
+
+    // 💳 PayPal payment logic
     const create_payment_json = {
       intent: "sale",
       payer: {
@@ -65,7 +109,6 @@ const createOrder = async (req, res) => {
           message: "Error while creating paypal payment",
         });
       } else {
-        // MySQL Query to insert new order into the database
         const newlyCreatedOrder = await Order.create({
           userId,
           cartId,
@@ -76,11 +119,9 @@ const createOrder = async (req, res) => {
           orderUpdateDate,
           paymentId,
           payerId,
-          orderDate: new Date(), 
-          });
-          
+          orderDate: new Date(),
+        });
 
-        // Insert all OrderItems (loop through cartItems)
         for (const item of cartItems) {
           await OrderItem.create({
             orderId: newlyCreatedOrder.id,
@@ -89,20 +130,18 @@ const createOrder = async (req, res) => {
             image: item.image,
             price: item.price,
             quantity: item.quantity,
-            orderDate: new Date(), // explicitly passing current date
-
+            orderDate: new Date(),
           });
         }
 
-        //  Insert OrderAddress with validated addressId
         await OrderAddress.create({
           orderId: newlyCreatedOrder.id,
-          addressId: addressInfo.addressId, // Make sure addressId is passed here
-          address: addressInfo.address,
-          city: addressInfo.city,
-          pincode: addressInfo.pincode,
-          phone: addressInfo.phone,
-          notes: addressInfo.notes,
+          addressId,
+          address,
+          city,
+          pincode,
+          phone,
+          notes,
         });
 
         const approvalURL = paymentInfo.links.find(
@@ -112,7 +151,7 @@ const createOrder = async (req, res) => {
         res.status(201).json({
           success: true,
           approvalURL,
-          orderId: newlyCreatedOrder.id, // assuming Sequelize will return the MySQL id
+          orderId: newlyCreatedOrder.id,
         });
       }
     });
@@ -124,6 +163,7 @@ const createOrder = async (req, res) => {
     });
   }
 };
+
 
 const capturePayment = async (req, res) => {
   try {

@@ -102,7 +102,7 @@ function UserCartItemsContent({ cartItem }) {
       </div>
       <div className="flex flex-col items-end">
         <p className="font-semibold text-lg mt-2 sm:mt-0">
-          ${(
+        ₹{(
             (cartItem?.salePrice > 0 ? cartItem?.salePrice : cartItem?.price) *
             cartItem?.quantity
           ).toFixed(2)}
